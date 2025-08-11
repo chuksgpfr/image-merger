@@ -59,11 +59,15 @@ fn main() -> Result<(), ImageErrors> {
 
     output.set_data(combined)?;
 
-    print!("ERR {}-{}\n", output.width, output.height);
-    print!("ERR2 {:?}\n", output.data.len());
+    // print!("ERR {}-{}\n", output.width, output.height);
+    // print!("ERR2 {:?}\n", output.data.len());
 
+    let new_img = image::save_buffer_with_format(output.name, &output.data, output.width, output.height, image::ColorType::Rgba8, image_format_1);
 
-    image::save_buffer_with_format(output.name, &output.data, output.width, output.height, image::ColorType::Rgba8, image_format_1).unwrap();
+    match new_img {
+        Ok(d) => d,
+        Err(err) => panic!("{:#?} ", err)
+    }
 
     Ok(())
 }
